@@ -27,6 +27,7 @@ class MySQLConnection:
         if verbose:
             lg = LogManager()
             lg.notify(query)
+            lg.notify(row)
         return row
 
     def __new__(cls):
