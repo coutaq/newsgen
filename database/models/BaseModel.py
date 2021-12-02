@@ -1,5 +1,5 @@
-from abc import ABC, abstractmethod
-from database.MySQLConnection import MySQLConnection
+from abc import ABC
+
 import database.QueryGenerator as qg
 
 
@@ -10,11 +10,11 @@ class BaseModel(ABC):
         pass
 
     @classmethod
-    def fields(cls):
+    def fields(cls) -> list:
         pass
 
     @classmethod
-    def foreign_fields(cls):
+    def foreign_fields(cls) -> list:
         pass
 
     @classmethod
@@ -30,5 +30,5 @@ class BaseModel(ABC):
         return qg.create_update(cls.table_name(), cls.fields() + cls.foreign_fields())(where, values)
 
     @classmethod
-    def delete(cls, where) -> MySQLConnection:
+    def delete(cls, where) -> str:
         return qg.create_delete(cls.table_name())(where)

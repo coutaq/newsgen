@@ -1,40 +1,39 @@
-from .utils import arr_to_str, fields_with_values
+from database.utils import arr_to_str, fields_with_values
 
 
-def create_select(table_name: str, fields):
+def create_select(table_name: str, fields) -> ():
     if fields == ["*"]:
         fields = "*"
     else:
         fields = arr_to_str(fields, '`')
 
-    def select(where):
+    def select(where: str) -> str:
         if where == "wildcard":
             return f"SELECT {fields} from `{table_name}`"
         else:
-
             return f"SELECT {fields} from `{table_name}` WHERE id = {where}"
 
     return select
 
 
-def create_insert(table_name: str, fields: []):
+def create_insert(table_name: str, fields: list) -> ():
     quote = "'"
 
-    def insert(values: []):
+    def insert(values: list) -> str:
         return f"INSERT into `{table_name}` ({arr_to_str(fields, '`')}) VALUES (NULL,{arr_to_str(values, quote)})"
 
     return insert
 
 
-def create_update(table_name: str, fields: []):
-    def update(where, values: []):
+def create_update(table_name: str, fields: list) -> ():
+    def update(where: str, values: list) -> str:
         return f"UPDATE `{table_name}` SET {fields_with_values(fields, values)} WHERE id = {where}"
 
     return update
 
 
-def create_delete(table_name: str):
-    def update(where):
+def create_delete(table_name: str) -> ():
+    def update(where: str) -> str:
         return f"DELETE from `{table_name}` WHERE id = {where}"
 
     return update

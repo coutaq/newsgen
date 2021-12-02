@@ -1,9 +1,10 @@
-from flask import Flask, jsonify, request
+from flask import Flask
+
+from api.utils import model_to_route, model_to_route_id
+from database.MySQLConnection import MySQLConnection
+from database.models.User import User
 from log.ConsoleLogger import ConsoleLogger
 from log.LogManager import LogManager
-from database.models.User import User
-from database.MySQLConnection import MySQLConnection
-from api.utils import model_to_route, model_to_route_id
 
 lg = LogManager()
 lg.attach(ConsoleLogger())
@@ -15,11 +16,14 @@ app = Flask(__name__)
 def hello_world():
     return "<p>Hello, World!</p>"
 
-@app.route('/user', methods=['POST', 'GET'])
-def user():
-    return model_to_route(User, conn)()
+
+exposed_models = {"user": User}
+for name, model in exposed_models:
+    @app.route(f'/{name}', methods=['POST', 'GET'])
+    def user():
+        return model_to_route(model, conn)()
 
 
-@app.route('/user/<int:id>', methods=['GET', 'DELETE', 'PUT'])
-def user_id(id):
-    return model_to_route_id(User, conn)(id)
+    @app.route(f'/{name}/<int:id>', methods=['GET', 'DELETE', 'PUT'])
+    def user_id(id):
+        return model_to_route_id(model, conn)(id)

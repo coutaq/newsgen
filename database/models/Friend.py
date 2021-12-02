@@ -1,4 +1,4 @@
-from .BaseModel import BaseModel
+from database.models.BaseModel import BaseModel
 
 
 class Category(BaseModel):
@@ -7,9 +7,9 @@ class Category(BaseModel):
         return 'friends'
 
     @staticmethod
-    def fields():
+    def fields() -> list:
         return ["id"]
 
     @staticmethod
-    def foreign_fields():
+    def foreign_fields() -> list:
         return ["from_id", "to_id"]

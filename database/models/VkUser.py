@@ -1,4 +1,4 @@
-from .BaseModel import BaseModel
+from database.models.BaseModel import BaseModel
 
 
 class VkUser(BaseModel):
@@ -7,9 +7,9 @@ class VkUser(BaseModel):
         return 'vk_users'
 
     @staticmethod
-    def fields():
+    def fields() -> list:
         return ["id", "name", "vk_id"]
 
     @staticmethod
-    def foreign_fields():
+    def foreign_fields() -> list:
         return []

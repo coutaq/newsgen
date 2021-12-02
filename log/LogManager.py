@@ -1,6 +1,6 @@
 from typing import List
 
-from log.Logger import  Logger
+from log.Logger import Logger
 
 
 class LogManager:

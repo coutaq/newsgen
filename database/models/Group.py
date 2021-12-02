@@ -1,4 +1,4 @@
-from .BaseModel import BaseModel
+from database.models.BaseModel import BaseModel
 
 
 class Group(BaseModel):
@@ -7,9 +7,9 @@ class Group(BaseModel):
         return 'groups'
 
     @staticmethod
-    def fields():
-        return ["id","title"]
+    def fields() -> list:
+        return ["id", "title"]
 
     @staticmethod
-    def foreign_fields():
+    def foreign_fields() -> list:
         return []

@@ -1,5 +1,6 @@
-from database.models.BaseModel import BaseModel
 from flask import request, jsonify
+
+from database.models.BaseModel import BaseModel
 
 
 def model_to_route(model: BaseModel, conn):

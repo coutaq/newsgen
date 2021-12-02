@@ -7,16 +7,17 @@ class MySQLConnection:
 
     @staticmethod
     def connection():
-        connection = pymysql.connect(host='localhost',
-                                     user='root',
-                                     password='',
-                                     db='vk-parser',
-                                     charset='utf8mb4',
-                                     cursorclass=pymysql.cursors.DictCursor)
+        connection = pymysql.connect(
+            host='localhost',
+            user='root',
+            password='',
+            db='vk-parser',
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor
+        )
         return connection
 
-    def execute_query(self, query, verbose=False):
-
+    def execute_query(self, query: str, verbose=False) -> dict:
         conn = self.connection()
         cursor = conn.cursor()
         cursor.execute(query)

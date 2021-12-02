@@ -1,4 +1,4 @@
-from .BaseModel import BaseModel
+from database.models.BaseModel import BaseModel
 
 
 class User(BaseModel):
@@ -7,9 +7,9 @@ class User(BaseModel):
         return 'users'
 
     @staticmethod
-    def fields():
+    def fields() -> list:
         return ["id", "login", "password"]
 
     @staticmethod
-    def foreign_fields():
+    def foreign_fields() -> list:
         return ["role_id"]
