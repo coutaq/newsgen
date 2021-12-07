@@ -11,7 +11,7 @@ class MySQLConnection:
             host='localhost',
             user='root',
             password='',
-            db='vk-parser',
+            db='news_gen',
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor
         )
