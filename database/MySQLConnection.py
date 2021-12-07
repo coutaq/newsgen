@@ -10,8 +10,8 @@ class MySQLConnection:
         connection = pymysql.connect(
             host='localhost',
             user='root',
-            password='',
-            db='news_gen',
+            password='root',
+            db='news_genb',
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor
         )
