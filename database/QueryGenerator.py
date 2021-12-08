@@ -16,3 +16,8 @@ def create_insert(table_name: str, fields: []):
             return f"INSERT into {table_name} ({arr_to_str(fields, '`')}) VALUES (NULL,{arr_to_str(values, sep)})"
 
     return insert
+def create_delete(table_name: str):
+    def delete(where):
+        return f"DELETE from {table_name} WHERE id = {where}"
+
+    return delete
