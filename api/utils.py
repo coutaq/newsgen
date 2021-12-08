@@ -31,11 +31,10 @@ def model_to_route_id(model: BaseModel, conn: MySQLConnection) -> ():
             query = model.read(where=id)
             data = conn.execute_query(query, True)
         if request.method == 'PUT':
-            values = {k:v for k,v in request.form.items()}
+            values = {k:v for k,v in request.json.items()}
             query = model.update(id, values)
-            return  query
             data = conn.execute_query(query, True)
-        if request.method == 'DELETE':
+        if request.method == 'sDELETE':
             query = model.delete(id)
             data = conn.execute_query(query, True)
         return jsonify(data)
