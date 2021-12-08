@@ -49,7 +49,7 @@ def authenticate(conn, login: str, password: str):
         if len(user) == 0:
             return {"user": None, "errors": {"login": "Пользователя с такой почтой не существует."}}
         else:
-            if check_hash(password, user[0]["password"]):
+            if check_hash(password, user["password"]):
                 return user, []
             else:
                 return {"user": None, "errors": {"password": "Неверный пароль!"}}
@@ -59,7 +59,7 @@ def authenticate(conn, login: str, password: str):
         if len(user) == 0:
             return {"user": None, "errors": {"login": "Пользователя с таким никнеймом не существует."}}
         else:
-            if check_hash(password, user[0]["password"]):
+            if check_hash(password, user["password"]):
                 return {"user": user, "errors": None}
             else:
                 return {"user": None, "errors": {"password": "Неверный пароль!"}}
