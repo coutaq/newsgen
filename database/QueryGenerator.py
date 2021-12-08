@@ -7,7 +7,7 @@ sep = '\''
 
 def create_select(table_name: str, fields):
     def select(where):
-        return f"SELECT {arr_to_str(fields, '')} from {table_name} {'WHERE ' + where if where else ''}"
+        return f"SELECT {arr_to_str(fields, '')} from {table_name} {'WHERE id = ' + where if where else ''}"
 
     return select
 
