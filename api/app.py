@@ -27,7 +27,7 @@ def hello_world():
 def upload_file():
     file = request.files.get('file')
     filename = secure_filename(file.filename)
-    file_location = os.path.join(app.config['BASEDIR'], app.config['UPLOAD_FOLDER'], filename)
+    file_location = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     print(app.config['BASEDIR'])
     print(file_location)
     # with open(file_location, 'wb+') as localfile:
