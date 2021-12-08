@@ -23,5 +23,7 @@ class AuthUser(BaseModel):
 
     @staticmethod
     def update(where, values) -> str:
-        values[3] = hash(values[3])
-        return QueryGenerator.create_update(AuthUser.table_name(), AuthUser.fields() + AuthUser.foreign_fields())(where, values)
+        if 'password' in values:
+            values['password'] = hash(values['password'])
+
+        return QueryGenerator.create_update(AuthUser.table_name())(where, values)

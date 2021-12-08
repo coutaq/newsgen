@@ -29,7 +29,7 @@ class BaseModel(ABC):
 
     @classmethod
     def update(cls, where, values) -> str:
-        return QueryGenerator.create_update(cls.table_name(), cls.fields() + cls.foreign_fields())(where, values)
+        return QueryGenerator.create_update(cls.table_name())(where, values)
 
     @classmethod
     def delete(cls, where) -> str:
