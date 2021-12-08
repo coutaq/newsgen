@@ -15,7 +15,7 @@ def model_to_route(model: BaseModel, conn: MySQLConnection) -> ():
         if request.method == 'POST':
             fields = model.fields() + model.foreign_fields()
             fields.remove("id")
-            values = [request.form.get(x) for x in fields]
+            values = [request.json.get(x) for x in fields]
             print(values)
             query = model.create(values)
             data = conn.execute_query(query, True)
