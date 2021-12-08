@@ -18,6 +18,9 @@ class MySQLConnection:
         return connection
 
     def execute_query(self, query: str, verbose=False) -> dict:
+        if verbose:
+            lg = LogManager()
+            lg.notify(query)
         conn = self.connection()
         cursor = conn.cursor()
         cursor.execute(query)
@@ -25,8 +28,6 @@ class MySQLConnection:
         conn.commit()
         conn.close()
         if verbose:
-            lg = LogManager()
-            lg.notify(query)
             lg.notify(row)
         if len(row) == 1:
             return row[0]
