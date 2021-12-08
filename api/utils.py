@@ -31,9 +31,7 @@ def model_to_route_id(model: BaseModel, conn: MySQLConnection) -> ():
             query = model.read(where=id)
             data = conn.execute_query(query, True)
         if request.method == 'PUT':
-            fields = model.fields() + model.foreign_fields()
-            fields.remove("id")
-            values = [request.form.get(x) for x in fields]
+            values = {k:v for k,v in request.form.items()}
             query = model.update(id, values)
             data = conn.execute_query(query, True)
         if request.method == 'DELETE':
