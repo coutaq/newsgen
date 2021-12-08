@@ -18,10 +18,10 @@ class AuthUser(BaseModel):
 
     @staticmethod
     def create(values) -> str:
-        values[2] = hash(values[2])
+        values[5] = hash(values[5])
         return QueryGenerator.create_insert(AuthUser.table_name(), AuthUser.fields() + AuthUser.foreign_fields())(values)
 
     @staticmethod
     def update(where, values) -> str:
-        values[2] = hash(values[2])
+        values[5] = hash(values[5])
         return QueryGenerator.create_update(AuthUser.table_name(), AuthUser.fields() + AuthUser.foreign_fields())(where, values)
