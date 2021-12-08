@@ -32,7 +32,7 @@ def upload_file():
     print(file_location)
     # with open(file_location, 'wb+') as localfile:
     #     file.save(localfile)
-    return jsonify(file_location)
+    return jsonify(file_location, app.config['BASEDIR'])
 
 
 @app.route("/auth", methods=["POST"])
