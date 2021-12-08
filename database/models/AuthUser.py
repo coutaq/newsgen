@@ -10,7 +10,7 @@ class AuthUser(BaseModel):
 
     @staticmethod
     def fields() -> list:
-        return ["id", "login", "email", "password", "image"]
+        return ["id", "name", "login", "email", "password", "image"]
 
     @staticmethod
     def foreign_fields() -> list:
