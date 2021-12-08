@@ -28,6 +28,8 @@ class MySQLConnection:
             lg = LogManager()
             lg.notify(query)
             lg.notify(row)
+        if len(row) == 1:
+            return row[0]
         return row
 
     def __new__(cls):
