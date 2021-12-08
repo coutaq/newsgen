@@ -30,8 +30,8 @@ def upload_file():
     file_location = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     print(app.config['BASEDIR'])
     print(file_location)
-    # with open(file_location, 'wb+') as localfile:
-    #     file.save(localfile)
+    with open(file_location, 'wb+') as localfile:
+        file.save(localfile)
     return jsonify(file_location, app.config['BASEDIR'])
 
 
