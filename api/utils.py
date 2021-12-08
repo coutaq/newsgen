@@ -12,6 +12,8 @@ def model_to_route(model: BaseModel, conn: MySQLConnection) -> ():
         if request.method == 'GET':
             query = model.read()
             data = conn.execute_query(query, True)
+            if not isinstance(data, list):
+                data = [data]
         if request.method == 'POST':
             fields = model.fields() + model.foreign_fields()
             fields.remove("id")
