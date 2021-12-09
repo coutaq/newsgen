@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from werkzeug.utils import  secure_filename
+from werkzeug.utils import secure_filename
 from api.utils import model_to_route, model_to_route_id, authenticate
 from database.MySQLConnection import MySQLConnection
 from database.models.Category import Category
@@ -8,14 +8,13 @@ from log.ConsoleLogger import ConsoleLogger
 from log.LogManager import LogManager
 from flask_cors import CORS
 import os
+
 lg = LogManager()
 lg.attach(ConsoleLogger())
 conn = MySQLConnection()
 app = Flask(__name__)
 
 CORS(app)
-
-
 
 
 @app.route("/")
@@ -42,13 +41,14 @@ def auth():
     pwd = request.json["password"]
     return jsonify(authenticate(conn, login, pwd))
 
+
 @app.route('/getReport')
 def report():
     query = "CALL `CreateUserPostsMatrix`();"
     users_matrix = conn.execute_query(query, True)
     query = "CALL `GetTopPostsOfAllTime`();"
     top_posts = conn.execute_query(query, True)
-    return jsonify(users_matrix, top_posts)
+    return {'users': users_matrix, 'top_posts': top_posts}
 
 
 exposed_models = {"users": AuthUser, "category": Category}
