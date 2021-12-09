@@ -1,15 +1,15 @@
 from database.models.BaseModel import BaseModel
 
 
-class Category(BaseModel):
+class User(BaseModel):
     @staticmethod
     def table_name() -> str:
-        return 'friends'
+        return 'user_posts'
 
     @staticmethod
     def fields() -> list:
-        return ["id"]
+        return ["id", "opened", "created_at"]
 
     @staticmethod
     def foreign_fields() -> list:
-        return ["from_id", "to_id"]
+        return ['user_id', 'post_id']
