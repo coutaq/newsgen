@@ -23,7 +23,7 @@ class Post(BaseModel):
 
     @staticmethod
     def create(values: list) -> str:
-        values.pop(2)
+        values[2] = 'NULL'
         return QueryGenerator.create_insert(Post.table_name(), Post.fields() + Post.foreign_fields())(
             values)
 
