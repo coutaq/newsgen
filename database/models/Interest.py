@@ -16,7 +16,7 @@ class Interest(BaseModel):
         return ["category_id"]
 
     @staticmethod
-    def select(values) -> str:
-        values[3] = hash(values[3])
-        return QueryGenerator.create_insert(Interest.table_name(), Interest.fields()+", categories.title")+"LEFT JOIN `categories` on category_id = categories.id"(
-            values)
+    def read(where=None, fields=None) -> str:
+        if fields is None:
+            fields = ["*"]
+        return QueryGenerator.create_select(Interest.table_name(), fields)(where)+"LEFT JOIN `categories` on category_id = categories.id"
