@@ -1,7 +1,7 @@
 from database.models.BaseModel import BaseModel
 
 
-class Role(BaseModel):
+class Post(BaseModel):
     @staticmethod
     def table_name() -> str:
         return 'posts'

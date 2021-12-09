@@ -4,6 +4,9 @@ from api.utils import model_to_route, model_to_route_id, authenticate
 from database.MySQLConnection import MySQLConnection
 from database.models.Category import Category
 from database.models.AuthUser import AuthUser
+from database.models.Interest import Interest
+from database.models.Post import Post
+from database.models.User import User
 from log.ConsoleLogger import ConsoleLogger
 from log.LogManager import LogManager
 from flask_cors import CORS
@@ -51,7 +54,7 @@ def report():
     return {'users': users_matrix, 'top_posts': top_posts}
 
 
-exposed_models = {"users": AuthUser, "category": Category}
+exposed_models = {"users": AuthUser, "category": Category, "dbusers": User, "posts": Post, "seen": UserPost, "interests": Interest}
 
 
 @app.route("/db/<model>", methods=["GET", "POST"])
