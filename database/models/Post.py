@@ -20,3 +20,16 @@ class Post(BaseModel):
         if fields is None:
             fields = ["posts.id, posts.title, interests.title as 'interest' , interests.id as 'interest_id' "]
         return QueryGenerator.create_select(Post.table_name(), fields, "LEFT JOIN `interests` on interest_id = interests.id")(where)
+
+    @staticmethod
+    def create(values: list) -> str:
+        values.pop(4)
+        return QueryGenerator.create_insert(Post.table_name(), Post.fields() + Post.foreign_fields())(
+            values)
+
+    @staticmethod
+    def update(where, values: dict) -> str:
+        if 'created_at' in values:
+            values.pop('created_at')
+
+        return QueryGenerator.create_update(Post.table_name())(where, values)
