@@ -24,9 +24,7 @@ class Post(BaseModel):
     @staticmethod
     def create(values: list) -> str:
         print("VAL:")
-        print(values)
-        return QueryGenerator.create_insert(Post.table_name(), Post.fields()[1:3] + Post.foreign_fields())(
-            values[0:1]+values[2:3])
+        return QueryGenerator.create_insert(Post.table_name(), Post.fields()[1:3] + Post.foreign_fields())(values[0:2])
 
     @staticmethod
     def update(where, values: dict) -> str:
