@@ -42,6 +42,14 @@ def auth():
     pwd = request.json["password"]
     return jsonify(authenticate(conn, login, pwd))
 
+@app.route('/getReport')
+def report():
+    query = "CALL `CreateUserPostsMatrix`();"
+    users_matrix = conn.execute_query(query, True)
+    query = "CALL `GetTopPostsOfAllTime`();"
+    top_posts = conn.execute_query(query, True)
+    return jsonify(users_matrix, top_posts)
+
 
 exposed_models = {"users": AuthUser, "category": Category}
 
