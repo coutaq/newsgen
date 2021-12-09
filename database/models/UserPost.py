@@ -1,7 +1,7 @@
 from database.models.BaseModel import BaseModel
 
 
-class User(BaseModel):
+class UserPost(BaseModel):
     @staticmethod
     def table_name() -> str:
         return 'user_posts'
