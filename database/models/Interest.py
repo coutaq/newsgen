@@ -18,5 +18,5 @@ class Interest(BaseModel):
     @staticmethod
     def read(where=None, fields=None) -> str:
         if fields is None:
-            fields = ["*"]
-        return QueryGenerator.create_select(Interest.table_name(), fields)(where)+"LEFT JOIN `categories` on category_id = categories.id"
+            fields = ["interests.id, interests.title, categories.title as 'Категория' "]
+        return QueryGenerator.create_select(Interest.table_name(), fields, ["LEFT JOIN `categories` on category_id = categories.id"] )(where)

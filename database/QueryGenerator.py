@@ -5,9 +5,9 @@ from .utils import arr_to_str
 sep = '\''
 
 
-def create_select(table_name: str, fields):
+def create_select(table_name: str, fields, args):
     def select(where):
-        return f"SELECT {arr_to_str(fields, '')} from {table_name} {'WHERE id = ' + where if where else ''} ORDER BY id;"
+        return f"SELECT {arr_to_str(fields, '')} from {table_name} {' '.join(args)} {'WHERE id = ' + where if where else ''} ORDER BY `{table_name}`.id;"
 
     return select
 
