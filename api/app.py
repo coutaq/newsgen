@@ -6,6 +6,7 @@ from database.models.Category import Category
 from database.models.AuthUser import AuthUser
 from database.models.Interest import Interest
 from database.models.Post import Post
+from database.models.UserPost import UserPost
 from database.models.User import User
 from log.ConsoleLogger import ConsoleLogger
 from log.LogManager import LogManager
