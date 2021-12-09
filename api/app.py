@@ -55,7 +55,7 @@ def report():
     return {'users': users_matrix, 'top_posts': top_posts}
 
 
-exposed_models = {"users": AuthUser, "category": Category, "dbusers": User, "posts": Post, "seen": UserPost, "interests": Interest}
+exposed_models = {"users": AuthUser, "categories": Category, "dbusers": User, "posts": Post, "seen": UserPost, "interests": Interest}
 
 
 @app.route("/db/<model>", methods=["GET", "POST"])
