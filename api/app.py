@@ -69,8 +69,17 @@ def api_routes_id(model, id):
 
 
 @app.route("/interests-filter/<id>")
-def filter(id):
+def int_filter(id):
     query = Interest.read(id, 'category_id')
+    data = conn.execute_query(query, True)
+    if not isinstance(data, list):
+        data = [data]
+    return jsonify(data)
+
+
+@app.route("/posts-filter/<id>")
+def post_filter(id):
+    query = Post.read(id, 'category_id')
     data = conn.execute_query(query, True)
     if not isinstance(data, list):
         data = [data]

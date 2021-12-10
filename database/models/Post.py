@@ -16,10 +16,10 @@ class Post(BaseModel):
         return ['interest_id']
 
     @staticmethod
-    def read(where=None, fields=None) -> str:
+    def read(where=None,where_field='id', fields=None) -> str:
         if fields is None:
             fields = ["posts.id, posts.title, posts.link, interests.title as 'interest' , interests.id as 'interest_id' "]
-        return QueryGenerator.create_select(Post.table_name(), fields, "LEFT JOIN `interests` on interest_id = interests.id")(where)
+        return QueryGenerator.create_select(Post.table_name(), fields, "LEFT JOIN `interests` on interest_id = interests.id")(where, where_field)
 
     @staticmethod
     def create(values: list) -> str:
