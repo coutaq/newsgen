@@ -79,7 +79,7 @@ def int_filter(id):
 
 @app.route("/posts-filter/<id>")
 def post_filter(id):
-    query = Post.read(id, 'category_id')
+    query = Post.read(id, 'interest_id')
     data = conn.execute_query(query, True)
     if not isinstance(data, list):
         data = [data]
