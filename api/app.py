@@ -66,3 +66,9 @@ def api_routes(model):
 @app.route("/db/<model>/<id>", methods=["GET", "PUT", "DELETE"])
 def api_routes_id(model, id):
     return model_to_route_id(exposed_models[model], conn)(id)
+
+
+@app.route("/interests-filter/<id>")
+def filter(id):
+    query = Interest.read(id, 'category_id')
+    return(conn.execute_query(query, True))
