@@ -48,8 +48,6 @@ def auth():
 
 @app.route('/getReport')
 def report():
-    query = "CALL `CreateUserPostsMatrix`();"
-    users_matrix = conn.execute_query(query, True)
     query = "CALL `GetTopPostsOfAllTime`();"
     top_posts = conn.execute_query(query, True)
     query = "CALL `GetViewsOfAllTime`();"
@@ -57,7 +55,7 @@ def report():
     query = "CALL `GetViewsByInterest`();"
     views_by_interest = conn.execute_query(query, True)
 
-    return {'users': users_matrix, 'top_posts': top_posts, 'views':views, 'views_by_interest': views_by_interest}
+    return {'top_posts': top_posts, 'views':views, 'views_by_interest': views_by_interest}
 
 
 exposed_models = {"users": AuthUser, "categories": Category, "dbusers": User, "posts": Post, "seen": UserPost, "interests": Interest}
