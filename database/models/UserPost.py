@@ -25,4 +25,4 @@ class UserPost(BaseModel):
     def create(values: list) -> str:
         print("VAL:")
         print(values)
-        return QueryGenerator.create_insert(UserPost.table_name(), UserPost.fields()[0:1] + UserPost.foreign_fields())(values[0:2])
+        return QueryGenerator.create_insert(UserPost.table_name(), UserPost.fields()[0:1] + UserPost.foreign_fields())(values[0:1]+[values[3]])
