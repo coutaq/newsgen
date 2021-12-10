@@ -71,4 +71,4 @@ def api_routes_id(model, id):
 @app.route("/interests-filter/<id>")
 def filter(id):
     query = Interest.read(id, 'category_id')
-    return(conn.execute_query(query, True))
+    return conn.execute_query(query, True)
