@@ -46,7 +46,7 @@ def model_to_route_id(model: BaseModel, conn: MySQLConnection) -> ():
 
 def authenticate(conn, login: str, password: str):
     if "@" in login and "." in login:
-        query = AuthUser.read(where=f"email = '{login}'")
+        query = AuthUser.read(where=f"'{login}'",where_field="email")
         user = conn.execute_query(query)
         if len(user) == 0:
             return {"user": None, "errors": {"login": "Пользователя с такой почтой не существует."}}
@@ -56,7 +56,7 @@ def authenticate(conn, login: str, password: str):
             else:
                 return {"user": None, "errors": {"password": "Неверный пароль!"}}
     else:
-        query = AuthUser.read(where=f"login = '{login}'")
+        query = AuthUser.read(where=f"'{login}'",where_field="login")
         user = conn.execute_query(query)
         if len(user) == 0:
             return {"user": None, "errors": {"login": "Пользователя с таким никнеймом не существует."}}
