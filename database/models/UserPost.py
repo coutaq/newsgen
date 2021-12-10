@@ -23,6 +23,11 @@ class UserPost(BaseModel):
 
     @staticmethod
     def create(values: list) -> str:
-        print("VAL:")
-        print(values)
         return QueryGenerator.create_insert(UserPost.table_name(), UserPost.fields()[0:2] + UserPost.foreign_fields())(values[0:1]+values[2:])
+
+    @staticmethod
+    def update(where, values: dict) -> str:
+        if 'created_at' in values:
+            values.pop('created_at')
+
+        return QueryGenerator.create_update(UserPost.table_name())(where, values)
