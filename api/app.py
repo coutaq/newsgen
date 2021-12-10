@@ -52,7 +52,9 @@ def report():
     users_matrix = conn.execute_query(query, True)
     query = "CALL `GetTopPostsOfAllTime`();"
     top_posts = conn.execute_query(query, True)
-    return {'users': users_matrix, 'top_posts': top_posts}
+    query = "CALL `GetViewsOfAllTime`();"
+    views = conn.execute_query(query, True)
+    return {'users': users_matrix, 'top_posts': top_posts, 'views':views}
 
 
 exposed_models = {"users": AuthUser, "categories": Category, "dbusers": User, "posts": Post, "seen": UserPost, "interests": Interest}
