@@ -22,10 +22,10 @@ class BaseModel(ABC):
         return QueryGenerator.create_insert(cls.table_name(), cls.fields() + cls.foreign_fields())(values)
 
     @classmethod
-    def read(cls, where=None, fields=None) -> str:
+    def read(cls, where=None, fields=None, where_field = "'id'") -> str:
         if fields is None:
             fields = ["*"]
-        return QueryGenerator.create_select(cls.table_name(), fields)(where)
+        return QueryGenerator.create_select(cls.table_name(), fields)(where,where_field)
 
     @classmethod
     def update(cls, where, values) -> str:
