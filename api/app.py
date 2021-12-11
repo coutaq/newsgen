@@ -27,8 +27,9 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
-@auth.login_required
+
 @app.route("/upload-file", methods=["POST"])
+@auth.login_required
 def upload_file():
     file = request.files.get('file')
     filename = secure_filename(file.filename)
@@ -41,6 +42,9 @@ def upload_file():
 
 
 @auth.verify_password
+def verify(username, password):
+    return authenticate(conn, username, password)
+
 @app.route("/auth", methods=["POST"])
 def auth():
     # lg.notify(request)
@@ -49,8 +53,9 @@ def auth():
     return jsonify(authenticate(conn, login, pwd))
 
 
-@auth.login_required
+
 @app.route('/getReport')
+@auth.login_required
 def report():
     query = "CALL `GetTopPostsOfAllTime`();"
     top_posts = conn.execute_query(query, True)
@@ -66,20 +71,23 @@ exposed_models = {"users": AuthUser, "categories": Category, "dbusers": User, "p
                   "interests": Interest}
 
 
-@auth.login_required
+
 @app.route("/db/<model>", methods=["GET", "POST"])
+@auth.login_required
 def api_routes(model):
     return model_to_route(exposed_models[model], conn)()
 
 
-@auth.login_required
+
 @app.route("/db/<model>/<id>", methods=["GET", "PUT", "DELETE"])
+@auth.login_required
 def api_routes_id(model, id):
     return model_to_route_id(exposed_models[model], conn)(id)
 
 
-@auth.login_required
+
 @app.route("/interests-filter/<id>")
+@auth.login_required
 def int_filter(id):
     query = Interest.read(id, 'category_id')
     data = conn.execute_query(query, True)
@@ -88,8 +96,9 @@ def int_filter(id):
     return jsonify(data)
 
 
-@auth.login_required
+
 @app.route("/posts-filter/<id>")
+@auth.login_required
 def post_filter(id):
     query = Post.read(id, 'interest_id')
     data = conn.execute_query(query, True)
