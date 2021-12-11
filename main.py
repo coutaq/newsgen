@@ -13,7 +13,7 @@ query = User.read(fields=['users.id'])
 users = conn.execute_query(query, True)
 query = Post.read(fields=['posts.id'])
 posts = conn.execute_query(query, True)
-users = map(lambda d: d['id'], users)
-posts = map(lambda d: d['id'], posts)
+users =[d['id'] for d in users]
+posts = [d['id'] for d in posts]
 print(users)
 print(posts)
