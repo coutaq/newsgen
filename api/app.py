@@ -21,7 +21,7 @@ app = Flask(__name__)
 auth = HTTPBasicAuth()
 CORS(app)
 
-lg.notify(auth)
+
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
@@ -46,7 +46,7 @@ def upload_file():
 
 
 @app.route("/auth", methods=["POST"])
-def auth():
+def auth_my():
     # lg.notify(request)
     login = request.json["login"]
     pwd = request.json["password"]
