@@ -23,8 +23,9 @@ CORS(app)
 
 
 @app.route("/")
+@auth.login_required()
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return "<p>Hello, "+auth.current_user()+'</p>'
 
 
 @auth.verify_password
