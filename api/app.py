@@ -18,7 +18,7 @@ lg = LogManager()
 lg.attach(ConsoleLogger())
 conn = MySQLConnection()
 app = Flask(__name__)
-auth = HTTPBasicAuth()
+auth = HTTPBasicAuth().get_auth()
 CORS(app)
 
 
