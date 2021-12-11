@@ -22,5 +22,5 @@ for i in range(300):
     post = choice(posts)
     user = choice(users)
     opened = choice(["1", "0"])
-    query = UserPost.create([opened, user, post, "test"])
+    query = UserPost.create([opened, user, "test", post])
     users = conn.execute_query(query, True)
