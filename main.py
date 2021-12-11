@@ -9,7 +9,7 @@ app.config['BASEDIR'] = basedir
 #app.run(debug=True)
 
 conn = MySQLConnection()
-query = User.read(fields=['id'])
+query = User.read(fields=['users.id'])
 users = conn.execute_query(query, True)
-query = Post.read(fields=['id'])
+query = Post.read(fields=['posts.id'])
 posts = conn.execute_query(query, True)
