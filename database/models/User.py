@@ -8,7 +8,7 @@ class User(BaseModel):
 
     @staticmethod
     def fields() -> list:
-        return ["id", "name"]
+        return ["id", "name", "gender", "age"]
 
     @staticmethod
     def foreign_fields() -> list:
