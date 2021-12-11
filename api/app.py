@@ -11,13 +11,14 @@ from database.models.User import User
 from log.ConsoleLogger import ConsoleLogger
 from log.LogManager import LogManager
 from flask_cors import CORS
+from flask_httpauth import HTTPBasicAuth
 import os
 
 lg = LogManager()
 lg.attach(ConsoleLogger())
 conn = MySQLConnection()
 app = Flask(__name__)
-
+auth = HTTPBasicAuth()
 CORS(app)
 
 
@@ -26,6 +27,7 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
+@auth.login_required
 @app.route("/upload-file", methods=["POST"])
 def upload_file():
     file = request.files.get('file')
@@ -38,6 +40,7 @@ def upload_file():
     return jsonify(file_location, app.config['BASEDIR'])
 
 
+@auth.verify_password
 @app.route("/auth", methods=["POST"])
 def auth():
     # lg.notify(request)
@@ -46,6 +49,7 @@ def auth():
     return jsonify(authenticate(conn, login, pwd))
 
 
+@auth.login_required
 @app.route('/getReport')
 def report():
     query = "CALL `GetTopPostsOfAllTime`();"
@@ -55,22 +59,26 @@ def report():
     query = "CALL `GetViewsByInterest`();"
     views_by_interest = conn.execute_query(query, True)
 
-    return {'top_posts': top_posts, 'views':views, 'views_by_interest': views_by_interest}
+    return {'top_posts': top_posts, 'views': views, 'views_by_interest': views_by_interest}
 
 
-exposed_models = {"users": AuthUser, "categories": Category, "dbusers": User, "posts": Post, "seen": UserPost, "interests": Interest}
+exposed_models = {"users": AuthUser, "categories": Category, "dbusers": User, "posts": Post, "seen": UserPost,
+                  "interests": Interest}
 
 
+@auth.login_required
 @app.route("/db/<model>", methods=["GET", "POST"])
 def api_routes(model):
     return model_to_route(exposed_models[model], conn)()
 
 
+@auth.login_required
 @app.route("/db/<model>/<id>", methods=["GET", "PUT", "DELETE"])
 def api_routes_id(model, id):
     return model_to_route_id(exposed_models[model], conn)(id)
 
 
+@auth.login_required
 @app.route("/interests-filter/<id>")
 def int_filter(id):
     query = Interest.read(id, 'category_id')
@@ -80,6 +88,7 @@ def int_filter(id):
     return jsonify(data)
 
 
+@auth.login_required
 @app.route("/posts-filter/<id>")
 def post_filter(id):
     query = Post.read(id, 'interest_id')
