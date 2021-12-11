@@ -18,10 +18,10 @@ lg = LogManager()
 lg.attach(ConsoleLogger())
 conn = MySQLConnection()
 app = Flask(__name__)
-auth = HTTPBasicAuth().get_auth()
+auth = HTTPBasicAuth()
 CORS(app)
 
-
+lg.notify(auth)
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
