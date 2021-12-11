@@ -27,6 +27,10 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
+@auth.verify_password
+def verify(username, password):
+    return authenticate(conn, username, password)
+
 
 @app.route("/upload-file", methods=["POST"])
 @auth.login_required
@@ -41,17 +45,12 @@ def upload_file():
     return jsonify(file_location, app.config['BASEDIR'])
 
 
-@auth.verify_password
-def verify(username, password):
-    return authenticate(conn, username, password)
-
 @app.route("/auth", methods=["POST"])
 def auth():
     # lg.notify(request)
     login = request.json["login"]
     pwd = request.json["password"]
     return jsonify(authenticate(conn, login, pwd))
-
 
 
 @app.route('/getReport')
@@ -71,19 +70,16 @@ exposed_models = {"users": AuthUser, "categories": Category, "dbusers": User, "p
                   "interests": Interest}
 
 
-
 @app.route("/db/<model>", methods=["GET", "POST"])
 @auth.login_required
 def api_routes(model):
     return model_to_route(exposed_models[model], conn)()
 
 
-
 @app.route("/db/<model>/<id>", methods=["GET", "PUT", "DELETE"])
 @auth.login_required
 def api_routes_id(model, id):
     return model_to_route_id(exposed_models[model], conn)(id)
-
 
 
 @app.route("/interests-filter/<id>")
@@ -94,7 +90,6 @@ def int_filter(id):
     if not isinstance(data, list):
         data = [data]
     return jsonify(data)
-
 
 
 @app.route("/posts-filter/<id>")
