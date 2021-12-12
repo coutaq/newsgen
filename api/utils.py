@@ -1,10 +1,18 @@
 from flask import request, jsonify, Response
-
+import functools
 from database.models.AuthUser import AuthUser
 from database.models.BaseModel import BaseModel
 from database.MySQLConnection import MySQLConnection
 from database.utils import check_hash
 
+
+def logged_in(func, auth):
+    @functools.wraps(func)
+    def wrapper_logged_in(*args, **kwargs):
+        if auth.current_user().errors:
+            return None
+        return func(*args, **kwargs)
+    return wrapper_logged_in
 
 def model_to_route(model: BaseModel, conn: MySQLConnection) -> ():
     def model_func() -> Response:

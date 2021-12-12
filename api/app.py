@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
-from api.utils import model_to_route, model_to_route_id, authenticate
+from api.utils import model_to_route, model_to_route_id, authenticate, logged_in
 from database.MySQLConnection import MySQLConnection
 from database.models.Category import Category
 from database.models.AuthUser import AuthUser
@@ -24,6 +24,7 @@ CORS(app)
 
 @app.route("/")
 @auth.login_required()
+@logged_in(auth)
 def hello_world():
     return "Hello, {}!".format(auth.current_user())
 
@@ -35,6 +36,7 @@ def verify(username, password):
 
 @app.route("/upload-file", methods=["POST"])
 @auth.login_required
+@logged_in(auth)
 def upload_file():
     file = request.files.get('file')
     filename = secure_filename(file.filename)
@@ -56,6 +58,7 @@ def auth_my():
 
 @app.route('/getReport')
 @auth.login_required
+@logged_in(auth)
 def report():
     query = "CALL `GetTopPostsOfAllTime`();"
     top_posts = conn.execute_query(query, True)
@@ -73,18 +76,21 @@ exposed_models = {"users": AuthUser, "categories": Category, "dbusers": User, "p
 
 @app.route("/db/<model>", methods=["GET", "POST"])
 @auth.login_required
+@logged_in(auth)
 def api_routes(model):
     return model_to_route(exposed_models[model], conn)()
 
 
 @app.route("/db/<model>/<id>", methods=["GET", "PUT", "DELETE"])
 @auth.login_required
+@logged_in(auth)
 def api_routes_id(model, id):
     return model_to_route_id(exposed_models[model], conn)(id)
 
 
 @app.route("/interests-filter/<id>")
 @auth.login_required
+@logged_in(auth)
 def int_filter(id):
     query = Interest.read(id, 'category_id')
     data = conn.execute_query(query, True)
@@ -95,6 +101,7 @@ def int_filter(id):
 
 @app.route("/posts-filter/<id>")
 @auth.login_required
+@logged_in(auth)
 def post_filter(id):
     query = Post.read(id, 'interest_id')
     data = conn.execute_query(query, True)
