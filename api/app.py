@@ -26,7 +26,7 @@ def logged_in(func):
     @functools.wraps(func)
     def wrapper_logged_in(*args, **kwargs):
         print(auth.current_user())
-        if 'errors' in auth.current_user()
+        if auth.current_user()['errors']:
             return None
         return func(*args, **kwargs)
     return wrapper_logged_in
