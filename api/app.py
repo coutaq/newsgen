@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
-from api.utils import model_to_route, model_to_route_id, authenticate, logged_in
+from api.utils import model_to_route, model_to_route_id, authenticate
 from database.MySQLConnection import MySQLConnection
 from database.models.Category import Category
 from database.models.AuthUser import AuthUser
