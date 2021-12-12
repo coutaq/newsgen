@@ -6,7 +6,7 @@ from database.MySQLConnection import MySQLConnection
 from database.utils import check_hash
 
 
-def logged_in(func, auth):
+def logged_in(auth):
     @functools.wraps(func)
     def wrapper_logged_in(*args, **kwargs):
         if auth.current_user().errors:
