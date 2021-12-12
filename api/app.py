@@ -13,6 +13,7 @@ from log.LogManager import LogManager
 from flask_cors import CORS
 from flask_httpauth import HTTPBasicAuth
 import os
+import functools
 
 lg = LogManager()
 lg.attach(ConsoleLogger())
@@ -21,10 +22,17 @@ app = Flask(__name__)
 auth = HTTPBasicAuth()
 CORS(app)
 
+def logged_in(func):
+    @functools.wraps(func)
+    def wrapper_logged_in(*args, **kwargs):
+        if auth.current_user().errors:
+            return None
+        return func(*args, **kwargs)
+    return wrapper_logged_in
 
 @app.route("/")
 @auth.login_required()
-@logged_in(auth)
+@logged_in
 def hello_world():
     return "Hello, {}!".format(auth.current_user())
 
@@ -36,7 +44,7 @@ def verify(username, password):
 
 @app.route("/upload-file", methods=["POST"])
 @auth.login_required
-@logged_in(auth)
+@logged_in
 def upload_file():
     file = request.files.get('file')
     filename = secure_filename(file.filename)
@@ -58,7 +66,7 @@ def auth_my():
 
 @app.route('/getReport')
 @auth.login_required
-@logged_in(auth)
+@logged_in
 def report():
     query = "CALL `GetTopPostsOfAllTime`();"
     top_posts = conn.execute_query(query, True)
@@ -76,21 +84,21 @@ exposed_models = {"users": AuthUser, "categories": Category, "dbusers": User, "p
 
 @app.route("/db/<model>", methods=["GET", "POST"])
 @auth.login_required
-@logged_in(auth)
+@logged_in
 def api_routes(model):
     return model_to_route(exposed_models[model], conn)()
 
 
 @app.route("/db/<model>/<id>", methods=["GET", "PUT", "DELETE"])
 @auth.login_required
-@logged_in(auth)
+@logged_in
 def api_routes_id(model, id):
     return model_to_route_id(exposed_models[model], conn)(id)
 
 
 @app.route("/interests-filter/<id>")
 @auth.login_required
-@logged_in(auth)
+@logged_in
 def int_filter(id):
     query = Interest.read(id, 'category_id')
     data = conn.execute_query(query, True)
@@ -101,7 +109,7 @@ def int_filter(id):
 
 @app.route("/posts-filter/<id>")
 @auth.login_required
-@logged_in(auth)
+@logged_in
 def post_filter(id):
     query = Post.read(id, 'interest_id')
     data = conn.execute_query(query, True)
